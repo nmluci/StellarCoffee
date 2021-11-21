@@ -1,31 +1,62 @@
 from flask import Blueprint, request
+from flask.helpers import make_response
+
+from app.baseModel import SuccessResponse, FailedResponse
 
 order_bp = Blueprint("order_bp", __name__)
 
 @order_bp.route("/api/order/todaySpecials", methods=["GET"])
 def todaySpecialty():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/todayEvents", methods=["GET"])
 def todayEvents():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/addItem", methods=["POST"])
 def addItemToCart():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/returnItem", methods=["POST"])
 def returnItemFromCart():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/checkout", methods=["GET"])
 def checkout():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/queue", methods=["GET"])
 def getQueueStats():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
 
 @order_bp.route("/api/order/queue", methods=["POST"])
 def addQueue():
-   pass
+   try:
+      res = request.get_json()
+      return make_response(SuccessResponse().toDict())
+   except Exception as e:
+      return make_response(FailedResponse().toDict(), 500)
