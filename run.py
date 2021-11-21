@@ -1,6 +1,6 @@
-from app import create_app
+from app import stellar_app
 
-app = create_app()
+app = stellar_app(debug=False)
 
 if __name__ == '__main__':
    app.run(debug=True)
