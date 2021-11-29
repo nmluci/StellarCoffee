@@ -25,5 +25,24 @@ class User(db.Model):
 @dataclass
 class UserData:
     username: str
+    uid: str = None
+    firstname: str = None
+    lastname: str = None
     point: str = None
-    
+    password: str = None
+
+    def toDict(cls):
+        res = dict()
+        res['username'] = cls.username
+        if cls.uid:
+            res['uid'] = cls.uid
+        if cls.firstname:
+            res['first_name'] = cls.firstname
+        if cls.lastname:
+            res['last_name'] = cls.lastname
+        if cls.password:
+            res['password'] = cls.password
+        if cls.point:
+            res['point'] = cls.point
+        
+        return res

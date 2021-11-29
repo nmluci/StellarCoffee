@@ -4,7 +4,8 @@ from flask import Blueprint, request
 from flask.helpers import make_response
 
 from app.baseModel import FailedResponse, SuccessResponse
-from app.userdata.services import usePoint
+from app.userdata.models import UserData
+from app.userdata.services import getUserData, usePoint
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -13,16 +14,19 @@ def addPoint(username):
    try:
       addedPoint = request.args.get("add_point", default=0, type=int)
       if addedPoint: addPoint(username, addedPoint)
-      
+
       return make_response(SuccessResponse().toDict())
    except Exception as e:
       return make_response(FailedResponse().toDict(), 500)
 
 @user_bp.route("/api/user/<username>", methods=["GET"])
-def getUserInfo():
+def getUserInfo(username):
    try:
       res = request.get_json()
-      return make_response(SuccessResponse().toDict())
+      usr = UserData(username=username)
+
+      getUserData(usr)
+      return make_response(SuccessResponse(data=usr.toDict()).toDict())
    except Exception as e:
       return make_response(FailedResponse().toDict(), 500)
 
