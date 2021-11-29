@@ -52,8 +52,11 @@ class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.Text, unique=True)
     item_name = db.Column(db.Text, db.ForeignKey("Inventory.name", ondelete="SET NULL", onupdate="CASCADE"))
-    event_date = db.Column(db.Date, nullable=False)
-
+    date_start = db.Column(db.Date, nullable=False)
+    date_end = db.Column(db.Date, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    amount_type = db.Column(db.Text, nullable=False)
+    
     def insert(self):
         db.session.add(self)
         db.session.commit()
