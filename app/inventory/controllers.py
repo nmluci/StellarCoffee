@@ -9,8 +9,8 @@ import os
 
 inventory_bp = Blueprint("inventory_bp", __name__)
 
-@inventory_bp.route("/api/inventory/addItem", methods=["POST"])
-def addItemToCart():
+@inventory_bp.route("/api/inventory", methods=["POST"])
+def addItem():
    try:
       hed = request.headers.get("Super-Secret-Key")
       if (not hed) or (hed != os.environ.get("DEV_KEY")):
@@ -19,6 +19,7 @@ def addItemToCart():
       res = request.get_json()
       
       newItem = Item(
+         id=res.get("id"),
          name=res.get("name"),
          stock=res.get("stock"),
          price=res.get("price")
