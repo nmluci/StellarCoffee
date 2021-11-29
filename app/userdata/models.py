@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from app.baseModel import db
 
 class User(db.Model):
@@ -20,3 +21,9 @@ class User(db.Model):
 
     def update(self):
         db.session.commit()
+
+@dataclass
+class UserData:
+    username: str
+    point: str = None
+    

@@ -1,14 +1,19 @@
+from operator import add
+from os import add_dll_directory, remove
 from flask import Blueprint, request
 from flask.helpers import make_response
 
 from app.baseModel import FailedResponse, SuccessResponse
+from app.userdata.services import usePoint
 
 user_bp = Blueprint("user_bp", __name__)
 
 @user_bp.route("/api/user/<username>", methods=["POST"])
-def addPoint():
+def addPoint(username):
    try:
-      res = request.get_json()
+      addedPoint = request.args.get("add_point", default=0, type=int)
+      if addedPoint: addPoint(username, addedPoint)
+      
       return make_response(SuccessResponse().toDict())
    except Exception as e:
       return make_response(FailedResponse().toDict(), 500)
