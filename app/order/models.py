@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import unique
 from operator import delitem
+from re import L
 from app.baseModel import db
 
 class Orders(db.Model):
@@ -107,3 +108,29 @@ class UserOrder:
             res["orders"] = list(order for order in cls.orders)
         
         return res
+
+@dataclass
+class TodaySpecialData:
+    item_id: int
+    name: str
+    price: int
+
+    def toDict(cls):
+        return {
+            "id": cls.item_id,
+            "name": cls.name,
+            "price": cls.price,
+        }
+
+@dataclass
+class TodayEventData:
+    event_id: int
+    name: str
+    disc_amount: int
+
+    def toDict(cls):
+        return {
+            "event_id": cls.event_ide,
+            "title":  cls.name,
+            "disc_amount": cls.disc_amount
+        }
