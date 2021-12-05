@@ -19,16 +19,24 @@ def stellar_app(debug=False):
    app.config["JSON_SORT_KEYS"] = False
    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_AUTH") 
-   CORS(app)
+   cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-   @app.before_request
-   def headerCheck():
-      apiKey = request.headers.get("SC-API-TOKEN", None)
-      if (not apiKey) or (apiKey != os.environ.get("API_KEY")):
-         print("401 - Key Not Found!")
-         return make_response(FailedResponse(
-            errorMessage="THOU SHALT NOT PASSED"
-         ).toDict(), 401)
+   # @app.after_request
+   # def after_request(response):
+   #    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+   #    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+   #    return response
+
+   # @app.before_request
+   # def headerCheck():
+   #    print(request.headers)
+   #    if request.method != 'OPTIONS':
+   #       apiKey = request.headers.get("SC-API-TOKEN", None)
+   #       if (not apiKey) or (apiKey != os.environ.get("API_KEY")):
+   #          print("401 - Key Not Found!")
+   #          return make_response(FailedResponse(
+   #             errorMessage="THOU SHALT NOT PASSED"
+   #          ).toDict(), 401)
 
    app.register_blueprint(auth_bp)
    app.register_blueprint(inventory_bp)

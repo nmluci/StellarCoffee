@@ -35,6 +35,6 @@ def getUserInfo(username):
 def userLeaderboard():
    try:
       res = request.get_json()
-      return make_response(SuccessResponse().toDict())
+      return make_response(SuccessResponse(data=["Fufufu NOT NOW"]).toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

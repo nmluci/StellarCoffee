@@ -33,6 +33,7 @@ class SuccessResponse:
          res["page"] = cls.page
          res["per_page"] = cls.perPage
          res["total_pages"] = cls.totalPages
+      print(res)
       return res
 
 @dataclass
