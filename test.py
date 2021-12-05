@@ -1,28 +1,20 @@
 import base64
 
-def passwordHashing(plain: str) -> str:
-    hashed = str()
+def uniquify(plaintext: str, maxLen: int=16) -> str:
+    print(f"plaintext: {plaintext.split()}")
+    hashed = int()
     val = 0
     
-    for i, c in enumerate(plain):
-        hashed += str(ord(c)*10 + i + 1 if i+1 < 10 else ord(c)*100+i+1)
+    for i, c in enumerate(plaintext):
+        hashed += ord(c)*10 + i + 1 if i+1 < 10 else ord(c)*100+i+1
     hashNum = int(hashed)
     hashNum = int(pow(hashNum, 2))
 
-
-    while len(str(hashNum)) > 16:
+    while len(str(hashNum)) > maxLen:
         val += hashNum%10
         hashNum = hashNum/10
     
-    hashed = str(hashNum)
-    return base64.b64encode(hashed.encode("utf-8"))
+    return hashNum
 
-def generateUserToken(username: str, password: str) -> str:
-    token = f"{username}:{password}"
-    if len(token) < 255:
-        token += "###"
-        token += "$" * (252-len(token))
-
-    return base64.b64encode(token.encode("utf-8"))
-
-print(passwordHashing("dgshgjdkshjk:jkdhgjksgkshdgs"))
+plaintext = input("Plaintext: ")
+print(str(uniquify(plaintext)))

@@ -9,19 +9,18 @@ from app.userdata.models import UserData
 from app.baseModel import db
 
 def generateTodaySpecialty() -> List[TodayEventData]:
-    todaySpecials = db.session.query(Inventory).filter(Inventory.stocks != 0).all()
+    todaySpecials = db.session.query(Inventory).filter(Inventory.stock != 0).all()
     if not todaySpecials:
         raise Exception("no specials menu today")
-    
     return list(TodaySpecialData(
         item.id,
         item.name,
         item.price
-    ).toDict() for item in todaySpecials[5:])
+    ).toDict() for item in todaySpecials[:5])
 
 def generateTodayEvents() -> List[TodayEventData]:
     todayDate = datetime.now().date()
-    todayEvent = db.session.query(Events).filter(Events.date_start >= todayDate & Events.date_end <= todayDate).all()
+    todayEvent = db.session.query(Events).filter((Events.date_start >= todayDate) & (Events.date_end <= todayDate)).all()
     if not todayEvent:
         raise Exception("no events available today")
     return list(TodayEventData(

@@ -1,4 +1,3 @@
-from logging import PlaceHolder
 from app.baseModel import db
 from app.userdata.models import User
 from app.auth.models import SignInModel, SignUpModel
@@ -55,7 +54,6 @@ def registerUser(metadata: SignUpModel):
 
 def isUsernameUsed(uname: str) -> SignInModel:
     usernames = db.session.query(User).all()
-    
     for usr in usernames:
         if usr.username == uname:
             return usr

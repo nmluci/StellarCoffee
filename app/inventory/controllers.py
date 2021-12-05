@@ -28,4 +28,4 @@ def addItem():
       
       return make_response(SuccessResponse().toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(str(e)).toDict(), 500)

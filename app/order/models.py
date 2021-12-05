@@ -25,7 +25,7 @@ class Orders(db.Model):
         db.session.commit()
 
 class OrderItems(db.Model):
-    __tablename__ = "Orders"
+    __tablename__ = "OrderItems"
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     order_id = db.Column(db.Integer, db.ForeignKey("Orders.id", ondelete="SET NULL", onupdate="CASCADE"))
@@ -56,7 +56,7 @@ class Events(db.Model):
     date_end = db.Column(db.Date, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     amount_type = db.Column(db.Text, nullable=False)
-    
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
