@@ -13,7 +13,7 @@ def todaySpecialty():
       todaySpecials = generateTodaySpecialty()
       return make_response(SuccessResponse(data=todaySpecials).toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 
 @order_bp.route("/api/order/todayEvents", methods=["GET"])
 def todayEvents():
@@ -22,7 +22,7 @@ def todayEvents():
 
       return make_response(SuccessResponse(data=todayEvents).toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 
 @order_bp.route("/api/order/checkout", methods=["GET"])
 def checkout():
@@ -34,4 +34,4 @@ def checkout():
       checkout(usr)
       return make_response(SuccessResponse().toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

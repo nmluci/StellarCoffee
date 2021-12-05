@@ -17,18 +17,19 @@ def addPoint(username):
 
       return make_response(SuccessResponse().toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(errorMessage=str(e)), 500)
 
 @user_bp.route("/api/user/<username>", methods=["GET"])
 def getUserInfo(username):
    try:
-      res = request.get_json()
       usr = UserData(username=username)
 
       getUserData(usr)
-      return make_response(SuccessResponse(data=usr.toDict()).toDict())
+      return make_response(SuccessResponse(data=[usr]).toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      import traceback
+      traceback.print_exc()
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 
 @user_bp.route("/api/user/leaderboard", methods=["GET"])
 def userLeaderboard():
@@ -36,4 +37,4 @@ def userLeaderboard():
       res = request.get_json()
       return make_response(SuccessResponse().toDict())
    except Exception as e:
-      return make_response(FailedResponse().toDict(), 500)
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

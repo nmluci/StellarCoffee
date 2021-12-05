@@ -11,7 +11,7 @@ from app.order.controllers import order_bp
 from app.userdata.controllers import user_bp
 
 from app.inventory.models import Inventory
-from app.order.models import Orders
+from app.order.models import Orders, OrderItems, Events
 from app.userdata.models import User
 
 def stellar_app(debug=False):

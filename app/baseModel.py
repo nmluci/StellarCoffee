@@ -27,7 +27,7 @@ class SuccessResponse:
 
       if cls.data:
          res["data"] = cls.data
-         res["data"] = len(cls.data)
+         res["count"] = len(cls.data)
 
       if cls.page: 
          res["page"] = cls.page
