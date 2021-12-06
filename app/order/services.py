@@ -28,5 +28,5 @@ def generateTodayEvents() -> List[TodayEventData]:
         event.name, 
         f"IDR {event.amount}" if event.amount_type == "cash" else f"{event.amount}%").toDict() for event in todayEvent)
 
-def checkout(metadata: UserData):
+def generateCheckout(metadata: UserData):
     pass
