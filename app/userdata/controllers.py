@@ -5,7 +5,7 @@ from flask.helpers import make_response
 
 from app.baseModel import FailedResponse, SuccessResponse
 from app.userdata.models import UserData
-from app.userdata.services import getUserData, usePoint
+from app.userdata.services import getLeaderboard, getUserData
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -25,7 +25,7 @@ def getUserInfo(username):
       usr = UserData(username=username)
 
       getUserData(usr)
-      return make_response(SuccessResponse(data=[usr]).toDict())
+      return make_response(SuccessResponse(data=[usr.toDict()]).toDict())
    except Exception as e:
       import traceback
       traceback.print_exc()
@@ -34,7 +34,7 @@ def getUserInfo(username):
 @user_bp.route("/api/user/leaderboard", methods=["GET"])
 def userLeaderboard():
    try:
-      res = request.get_json()
-      return make_response(SuccessResponse(data=["Fufufu NOT NOW"]).toDict())
+      userCount = request.args.get("count")
+      return make_response(SuccessResponse(data=getLeaderboard(userCount)).toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

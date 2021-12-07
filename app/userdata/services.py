@@ -1,16 +1,11 @@
+from __future__ import annotations
+from typing import List
+
 from app.baseModel import db
 from app.userdata.models import User, UserData
 
-def addPoint(username:str, amount: int):
-    usr = db.session.query(User).filter(User.username==username).first()
-    if not usr:
-        raise Exception("username isn't registered")
-    
-    usr.point += amount
-    usr.update()
-
-def usePoint(username: str, amount: int):
-    pass
+def sortUserByPoint(userData: List[UserData]):
+    return list(x.toDict() for x in userData)
 
 def getUserData(metadata: UserData):
     usr = db.session.query(User).filter(User.username==metadata.username).first()
@@ -23,3 +18,11 @@ def getUserData(metadata: UserData):
     metadata.point = usr.point
     metadata.password = usr.password
     
+def getLeaderboard(usrCount: int):
+    users = db.session.query(User).all()
+    sortedUser = sortUserByPoint(list(UserData(
+        username=usr.username,
+        uid=usr.uid,
+        point=usr.point
+    ) for usr in users))
+    return sortedUser[:int(usrCount)]

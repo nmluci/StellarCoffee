@@ -42,7 +42,6 @@ class UserData:
             res['last_name'] = cls.lastname
         if cls.password:
             res['password'] = cls.password
-        if cls.point:
-            res['point'] = cls.point
+        res['point'] = cls.point
         
         return res
