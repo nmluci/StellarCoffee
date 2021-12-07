@@ -24,13 +24,12 @@ def todayEvents():
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 
-@order_bp.route("/api/order/checkout", methods=["POST"])
-def checkout():
+@order_bp.route("/api/order/<uid>/checkout", methods=["POST"])
+def checkout(uid):
    try:
-      res = request.get_json()
       usr = UserData(
          #TODO : Need change to uid, because frontend pass uid and better to user uid
-         username=res.get("username")
+         uid=uid
       )
       generateCheckout(usr)
       return make_response(SuccessResponse().toDict())
