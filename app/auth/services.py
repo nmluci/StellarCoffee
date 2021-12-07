@@ -3,7 +3,7 @@ from app.userdata.models import User
 from app.auth.models import SignInModel, SignUpModel
 import base64
 
-def uniquify(plaintext: str, maxLen: int=16) -> str:
+def uniquify(plaintext: str, maxLen: int=8) -> str:
     hashed = str()
     val = 0
     
@@ -12,12 +12,7 @@ def uniquify(plaintext: str, maxLen: int=16) -> str:
     hashNum = int(hashed)
     hashNum = int(pow(hashNum, 2))
 
-    while len(str(hashNum)) > maxLen:
-        val += hashNum%10
-        hashNum = hashNum/10
-    
-    hashed = str(hashNum)
-    return base64.b64encode(hashed.encode("utf-8"))
+    return str(hashNum%(10**maxLen)).encode("utf-8")
 
 def verifyUserCredentials(metadata: SignInModel) -> bool:
     plaintext = f"{metadata.username}:{metadata.password}"
@@ -47,7 +42,7 @@ def registerUser(metadata: SignUpModel):
         firstname=metadata.firstName,
         lastname=metadata.lastName,
         username=metadata.username,
-        password=uniquify(metadata.password, 20)
+        password=uniquify(metadata.password, 10)
     )
 
     newUser.insert()
@@ -56,5 +51,6 @@ def isUsernameUsed(uname: str) -> SignInModel:
     usernames = db.session.query(User).all()
     for usr in usernames:
         if usr.username == uname:
+            print(f"u:{usr.username} == c:{uname}")
             return usr
     return None
