@@ -1,7 +1,6 @@
 from app.baseModel import db
 from app.userdata.models import User
 from app.auth.models import SignInModel, SignUpModel
-import base64
 
 def uniquify(plaintext: str, maxLen: int=8) -> str:
     hashed = str()
@@ -12,7 +11,7 @@ def uniquify(plaintext: str, maxLen: int=8) -> str:
     hashNum = int(hashed)
     hashNum = int(pow(hashNum, 2))
 
-    return str(hashNum%(10**maxLen)).encode("utf-8")
+    return hashNum%(10**maxLen)
 
 def verifyUserCredentials(metadata: SignInModel) -> bool:
     plaintext = f"{metadata.username}:{metadata.password}"

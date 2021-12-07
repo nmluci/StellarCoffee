@@ -4,7 +4,7 @@ from app.baseModel import db
 class User(db.Model):
     __tablename__ = 'Userdata'
 
-    uid = db.Column(db.LargeBinary, primary_key=True, unique=True)
+    uid = db.Column(db.Integer, primary_key=True, unique=True)
     firstname = db.Column(db.Text, nullable=False)
     lastname = db.Column(db.Text, nullable=False)
     username = db.Column(db.Text, nullable=False, unique=True)

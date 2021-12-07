@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import dotenv
+import os
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -51,8 +52,8 @@ class FailedResponse:
       return res
 
 def setup_db(app):
-   db_path = "mysql+pymysql://root:kopikopikopi@3.145.27.206:8080/stellarCoffee"
-   app.config["SQLALCHEMY_DATABASE_URI"] = db_path
+   # db_path = "mysql+pymysql://root:kopikopikopi@3.145.27.206:8080/stellarCoffee"
+   app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_AUTH")
    db.app = app
    db.init_app(app)
 
