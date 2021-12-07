@@ -29,7 +29,6 @@ def stellar_app(debug=False):
 
    @app.before_request
    def headerCheck():
-      print(request.headers)
       if request.method != 'OPTIONS':
          apiKey = request.headers.get("SC-API-TOKEN", None)
          if (not apiKey) or (apiKey != os.environ.get("API_KEY")):
