@@ -7,6 +7,99 @@ baseHeader = {
     "Content-Type": "application/json"
 }
 
+inv = [
+    {
+        "menuId": 1,
+        "namaMenu": "Espresso",
+        "hargaMenu": 16000,
+        "pathGambar": "/assets/img/menu/espresso.jpg"
+    },
+    {
+        "menuId": 2,
+        "namaMenu": "Americano",
+        "hargaMenu": 24000,
+        "pathGambar": "/assets/img/menu/americano.jpg"
+    },
+    {
+        "menuId": 3,
+        "namaMenu": "Cappucino",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/cappucino.jpg"
+    },
+    {
+        "menuId": 4,
+        "namaMenu": "Vanilla Latte",
+        "hargaMenu": 27000,
+        "pathGambar": "/assets/img/menu/vanilla-latte.jpg"
+    },
+    {
+        "menuId": 5,
+        "namaMenu": "Cafe Latte",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/cafe-latte.jpg"
+    },
+    {
+        "menuId": 6,
+        "namaMenu": "Lemon Tea",
+        "hargaMenu": 17000,
+        "pathGambar": "/assets/img/menu/lemon-tea.jpg"
+    },
+    {
+        "menuId": 7,
+        "namaMenu": "Lychee Tea",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/lychee-tea.jpg"
+    },
+    {
+        "menuId": 8,
+        "namaMenu": "Taro Latte",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/taro-latte.jpg"
+    },
+    {
+        "menuId": 9,
+        "namaMenu": "Matcha Latte",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/matcha-latte.jpg"
+    },
+    {
+        "menuId": 10,
+        "namaMenu": "Chocolate Latte",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/chocolate-latte.jpg"
+    },
+    {
+        "menuId": 11,
+        "namaMenu": "French Fries",
+        "hargaMenu": 17000,
+        "pathGambar": "/assets/img/menu/french-fries.jpg"
+    },
+    {
+        "menuId": 12,
+        "namaMenu": "Potato Wedges",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/potato-wedges.jpg"
+    },
+    {
+        "menuId": 13,
+        "namaMenu": "Croissant",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/croissant.jpg"
+    },
+    {
+        "menuId": 14,
+        "namaMenu": "Cheese Burger",
+        "hargaMenu": 45000,
+        "pathGambar": "/assets/img/menu/cheese-burger.jpg"
+    },
+    {
+        "menuId": 15,
+        "namaMenu": "Deluxe Burger",
+        "hargaMenu": 50000,
+        "pathGambar": "/assets/img/menu/deluxe-burger.jpg"
+    }
+]
+
 data = [
     {
         "username": "fuwuna",
@@ -45,7 +138,17 @@ data = [
         "last_name": "Widyasprana"
     }
 ]
+points = [600, 500, 231, 421, 800, 142]
 
-for usr in data:
-    res = requests.post("http://127.0.0.1:6969/api/auth/register", headers=baseHeader, json=usr)
+
+print("Inserting Userdata")
+for point, usr in zip(points, data):
+    res = requests.post("http://127.0.0.1:5000/api/auth/register", headers=baseHeader, json=usr)
     print(usr["username"], res.status_code)
+    res = requests.post(f"http://127.0.0.1:5000/api/user/{usr['username']}?add_point={point}", headers=baseHeader, json=usr)
+    print(f"{usr['username']} point added: {point}", res.status_code)
+
+print("Inserting Inventory Data")
+for itm in inv:
+    res = requests.post("http://127.0.0.1:5000/api/inventory", headers=baseHeader, json=itm)
+    print(f"{itm['namaMenu']} added (id: {itm['menuId']})", res.status_code)
