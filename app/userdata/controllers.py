@@ -5,7 +5,7 @@ from flask.helpers import make_response
 
 from app.baseModel import FailedResponse, SuccessResponse
 from app.userdata.models import UserData
-from app.userdata.services import getLeaderboard, getUserData
+from app.userdata.services import getLeaderboard, getUserData, userAddPoint
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -13,7 +13,7 @@ user_bp = Blueprint("user_bp", __name__)
 def addPoint(username):
    try:
       addedPoint = request.args.get("add_point", default=0, type=int)
-      if addedPoint: addPoint(username, addedPoint)
+      if addedPoint: userAddPoint(username, addedPoint)
 
       return make_response(SuccessResponse().toDict())
    except Exception as e:
