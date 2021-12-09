@@ -19,10 +19,10 @@ def addItem():
       res = request.get_json()
       
       newItem = Item(
-         id=res.get("id"),
-         name=res.get("name"),
-         stock=res.get("stock"),
-         price=res.get("price")
+         id=res.get("menuId"),
+         name=res.get("namaMenu"),
+         stock=100,
+         price=res.get("hargaMenu")
       )
       registerNewItem(newItem)
       
