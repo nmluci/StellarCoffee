@@ -8,7 +8,7 @@ from app.order.models import Events, TodayEventData, TodaySpecialData
 from app.userdata.models import UserData
 from app.baseModel import db
 
-def generateTodaySpecialty() -> List[TodayEventData]:
+def generateTodaySpecialty() -> List[TodaySpecialData]:
     todaySpecials = db.session.query(Inventory).filter(Inventory.stock != 0).all()
     if not todaySpecials:
         raise Exception("no specials menu today")
