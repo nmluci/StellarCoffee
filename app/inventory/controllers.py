@@ -21,11 +21,12 @@ def addItem():
       newItem = Item(
          id=res.get("menuId"),
          name=res.get("namaMenu"),
-         stock=100,
          price=res.get("hargaMenu")
       )
       registerNewItem(newItem)
       
       return make_response(SuccessResponse().toDict())
    except Exception as e:
+      import traceback
+      traceback.print_exc()
       return make_response(FailedResponse(str(e)).toDict(), 500)
