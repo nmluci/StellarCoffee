@@ -144,11 +144,22 @@ points = [600, 500, 231, 421, 800, 142]
 print("Inserting Userdata")
 for point, usr in zip(points, data):
     res = requests.post("http://127.0.0.1:5000/api/auth/register", headers=baseHeader, json=usr)
-    print(usr["username"], res.status_code)
+    
+    if res.status_code == 200:
+        print(usr["username"])
+    else:
+        print(res.json())
     res = requests.post(f"http://127.0.0.1:5000/api/user/{usr['username']}?add_point={point}", headers=baseHeader, json=usr)
-    print(f"{usr['username']} point added: {point}", res.status_code)
+    
+    if res.status_code == 200:
+        print(f"{usr['username']} point added: {point}")
+    else:
+        print(res.json())
 
 print("Inserting Inventory Data")
 for itm in inv:
     res = requests.post("http://127.0.0.1:5000/api/inventory", headers=baseHeader, json=itm)
-    print(f"{itm['namaMenu']} added (id: {itm['menuId']})", res.status_code)
+    if res.status_code == 200:
+        print(f"{itm['namaMenu']} added (id: {itm['menuId']})", res.status_code)
+    else:
+        print(res.json())
