@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask.helpers import make_response
 
 from app.baseModel import SuccessResponse, FailedResponse
-from app.order.services import generateTodaySpecialty, generateTodayEvents, generateCheckout
+from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout
 from app.userdata.models import User, UserData
 
 order_bp = Blueprint("order_bp", __name__)
@@ -31,7 +31,7 @@ def checkout(uid):
          #TODO : Need change to uid, because frontend pass uid and better to user uid
          uid=uid
       )
-      generateCheckout(usr)
+      processCheckout(usr)
       return make_response(SuccessResponse().toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

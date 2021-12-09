@@ -12,6 +12,7 @@ class Orders(db.Model):
     username = db.Column(db.Text, db.ForeignKey("Userdata.username", ondelete="SET NULL", onupdate="CASCADE"))
     grand_price = db.Column(db.Integer, nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey("Events.id", ondelete="SET NULL", onupdate="CASCADE"))
+    date_created = db.Column(db.DateTime, nullable=False)
 
     def insert(self):
         db.session.add(self)
@@ -46,27 +47,27 @@ class OrderItems(db.Model):
     def update(self):
         db.session.commit()
 
-class Events(db.Model):
-    __tablename__ = "Events"
+# class Events(db.Model):
+#     __tablename__ = "Events"
 
-    id = db.Column(db.Integer, primary_key=True, unique=True)
-    name = db.Column(db.Text, unique=True)
-    item_name = db.Column(db.Text, db.ForeignKey("Inventory.name", ondelete="SET NULL", onupdate="CASCADE"))
-    date_start = db.Column(db.Date, nullable=False)
-    date_end = db.Column(db.Date, nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-    amount_type = db.Column(db.Text, nullable=False)
+#     id = db.Column(db.Integer, primary_key=True, unique=True)
+#     name = db.Column(db.Text, unique=True)
+#     item_name = db.Column(db.Text, db.ForeignKey("Inventory.name", ondelete="SET NULL", onupdate="CASCADE"))
+#     date_start = db.Column(db.Date, nullable=False)
+#     date_end = db.Column(db.Date, nullable=False)
+#     amount = db.Column(db.Integer, nullable=False)
+#     amount_type = db.Column(db.Text, nullable=False)
 
-    def insert(self):
-        db.session.add(self)
-        db.session.commit()
+#     def insert(self):
+#         db.session.add(self)
+#         db.session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
+#     def delete(self):
+#         db.session.delete(self)
+#         db.session.commit()
 
-    def update(self):
-        db.session.commit()
+#     def update(self):
+#         db.session.commit()
 
 @dataclass
 class Orders: 

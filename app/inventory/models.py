@@ -6,7 +6,6 @@ class Inventory(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.Text, nullable=False, unique=True)
-    stock = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
     def insert(self):
@@ -24,14 +23,12 @@ class Inventory(db.Model):
 class Item:
     id: int = None
     name: str = None
-    stock: int = None
     price: int = None
 
     def toDict(cls):
         res = dict()
         if cls.id: res["id"] = cls.id
         if cls.name: res["item_name"] = cls.name
-        if cls.stock: res["item_stock"] = cls.stock
         if cls.price: res["price"] = cls.price
 
         return res
