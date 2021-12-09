@@ -25,7 +25,7 @@ class User(db.Model):
 @dataclass
 class UserData:
     username: str
-    uid: bytes or str = None
+    uid: int = None
     firstname: str = None
     lastname: str = None
     point: str = None
@@ -35,7 +35,7 @@ class UserData:
         res = dict()
         res['username'] = cls.username
         if cls.uid:
-            res['uid'] = cls.uid.decode('utf-8')
+            res['uid'] = cls.uid
         if cls.firstname:
             res['first_name'] = cls.firstname
         if cls.lastname:
