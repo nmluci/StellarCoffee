@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  db:
+    image: mariadb:10.7.1-focal
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes
+      # - MARIADB_ROOT_PASSWORD=yes
+    volumes:
+      - db_volume:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.1.1-apache
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db_volume:
