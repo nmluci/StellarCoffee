@@ -1,5 +1,5 @@
 <h1 align="center">Stellar Coffee</h1>
-<img src="./docs/stellarCoffee.png"> 
+<img src="./docs/StellarCoffee.png"> 
 <h2 align="center">Our Data Structure Course's Final Project</h2>
 </br>
 
