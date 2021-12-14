@@ -11,6 +11,7 @@ def registerNewItem(metadata: Item):
     newMenu = Inventory(
         id=metadata.id,
         name=metadata.name,
-        price=metadata.price
+        price=metadata.price,
+        path_picture=metadata.path_picture
     )
     newMenu.insert()

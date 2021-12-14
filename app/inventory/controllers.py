@@ -21,7 +21,8 @@ def addItem():
       newItem = Item(
          id=res.get("menuId"),
          name=res.get("namaMenu"),
-         price=res.get("hargaMenu")
+         price=res.get("hargaMenu"),
+         path_picture=res.get("pathGambar")
       )
       registerNewItem(newItem)
       
