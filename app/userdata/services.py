@@ -29,9 +29,10 @@ def quick_sort(userData: List[UserData], low: int, high: int):
     quick_sort(userData, new_high, high)
     return
 
-def sortUserByPoint(userData: List[UserData]):    
+def sortUserByPoint(userData: List[UserData]):
     length_data = len(userData)
-    quick_sort(userData, 0, length_data)
+    temp_userData = userData[:]
+    quick_sort(temp_userData, 0, length_data)
     print(userData)
     return list(x.toDict() for x in userData)
 
