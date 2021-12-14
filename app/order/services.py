@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 from typing import List
 
 from datetime import datetime
@@ -6,7 +7,7 @@ from datetime import datetime
 from sqlalchemy.sql.operators import notbetween_op
 from app.inventory.models import Inventory
 
-from app.order.models import Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order
+from app.order.models import Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order, generalHistory
 from app.userdata.models import User
 from app.baseModel import db
 
@@ -82,3 +83,19 @@ def processCheckout(metadata: UserOrder):
     usr.point += grandTotal/1000
     usr.update()
     metadata.done = True
+
+def getUserGeneralHistoryCheckout(metadata: str) -> List[generalHistory]:
+    res = []
+    allOrders = db.session.query(Orders).all()
+
+    for order in allOrders:
+        if order.uid == int(metadata):
+            userHistory = generalHistory(
+                order_id=order.id,
+                date_created=order.date_created,
+                grand_total=order.grand_price,
+                total_item=order.quantity,
+                status=order.done
+            )
+            res.append(userHistory.toDict())
+    return res

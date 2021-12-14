@@ -3,7 +3,7 @@ from flask.helpers import make_response
 from datetime import datetime
 from app.baseModel import SuccessResponse, FailedResponse
 from app.order.models import Order, UserOrder
-from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout
+from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout, getUserGeneralHistoryCheckout
 from app.userdata.models import User, UserData
 
 order_bp = Blueprint("order_bp", __name__)
@@ -74,4 +74,11 @@ def checkout(uid):
    except Exception as e:
       import traceback
       traceback.print_exc()
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
+
+@order_bp.route("/api/order/history/<uid>", methods=["GET"])
+def history(uid):
+   try:
+      return make_response(SuccessResponse(data=getUserGeneralHistoryCheckout(uid)).toDict())
+   except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
