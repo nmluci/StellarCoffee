@@ -31,10 +31,9 @@ def quick_sort(userData: List[UserData], low: int, high: int):
 
 def sortUserByPoint(userData: List[UserData]):
     length_data = len(userData)
-    temp_userData = userData[:]
+    temp_userData = userData.copy()
     quick_sort(temp_userData, 0, length_data)
-    print(userData)
-    return list(x.toDict() for x in userData)
+    return list(x.toDict() for x in temp_userData)
 
 def userAddPoint(username: str, point: int):
     usr = db.session.query(User).filter(User.username==username).first()
