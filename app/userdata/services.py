@@ -4,14 +4,35 @@ from typing import List
 from app.baseModel import db
 from app.userdata.models import User, UserData
 
-def sortUserByPoint(userData: List[UserData]):
-    for i in range(len(userData)):
-        for seq, usr in enumerate(userData[:len(userData)-1]):
-            if usr.point < userData[seq+1].point:
-                temp = userData[seq]
-                userData[seq] = userData[seq+1]
-                userData[seq+1] = temp
+def partition(userData: List[UserData], low: int, high: int):
+    pivot = low
+    batas_bawah = low + 1
 
+    for i in range(low + 1, high):
+        if userData[i].point > userData[pivot].point:
+            # Swap
+            temp = userData[batas_bawah]
+            userData[batas_bawah] = userData[i] 
+            userData[i] = temp
+
+            batas_bawah += 1
+    temp = userData[pivot]
+    userData[pivot] = userData[batas_bawah - 1]
+    userData[batas_bawah - 1] = temp
+    return batas_bawah
+
+def quick_sort(userData: List[UserData], low: int, high: int):
+    if (low >= high) :
+        return
+    new_high = partition(userData, low, high)
+    quick_sort(userData, low, new_high - 1)
+    quick_sort(userData, new_high, high)
+    return
+
+def sortUserByPoint(userData: List[UserData]):    
+    length_data = len(userData)
+    quick_sort(userData, 0, length_data)
+    print(userData)
     return list(x.toDict() for x in userData)
 
 def userAddPoint(username: str, point: int):
