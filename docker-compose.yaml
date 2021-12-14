@@ -1,19 +1,23 @@
 version: '3.9'
 services:
   db:
-    image: mariadb:10.7.1-focal
+    image: postgres:14.1
     ports:
-      - "3306:3306"
+      - "5432:5432"
     restart: always
     environment:
-      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes
+      - POSTGRES_PASSWORD=kopikopikopi
+      - POSTGRES_DB=stellarCoffee
       # - MARIADB_ROOT_PASSWORD=yes
     volumes:
-      - db_volume:/var/lib/mysql
-  phpmyadmin:
-    image: phpmyadmin:5.1.1-apache
+      - db_volume:/var/lib/postgresql/dta
+  pgadmin4:
+    image: dpage/pgadmin4
     ports:
-      - "8080:80"
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=noreply@stellarcoffee.com
+      - PGADMIN_DEFAULT_PASSWORD=kopikopikopi
     depends_on:
       - db
 
