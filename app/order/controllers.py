@@ -2,8 +2,8 @@ from flask import Blueprint, request
 from flask.helpers import make_response
 from datetime import datetime
 from app.baseModel import SuccessResponse, FailedResponse
-from app.order.models import Order, UserOrder
-from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout
+from app.order.models import EventData, Order, UserOrder
+from app.order.services import generateTodaySpecialty, generateTodayEvents, insertEvents, processCheckout
 from app.userdata.models import User, UserData
 
 order_bp = Blueprint("order_bp", __name__)
@@ -47,6 +47,22 @@ def todayEvents():
       todayEvents = generateTodayEvents()
 
       return make_response(SuccessResponse(data=todayEvents).toDict())
+   except Exception as e:
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
+
+@order_bp.route("/api/order/events", methods=["POST"])
+def addEventCoupon():
+   try:
+      res = request.get_json()
+      event = EventData(
+         name=res.get("name"),
+         coupon=res.get("code"),
+         date_start=datetime.strptime(res.get("date_start"), "%Y-%m-%d"),
+         date_end=datetime.strptime(res.get("date_end"), "%Y-%m-%d"),
+         amount=res.get("amount")
+      )
+      insertEvents(event)
+      return make_response(SuccessResponse(data=[event]).toDict())      
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 

@@ -52,17 +52,16 @@ class Events(db.Model):
     __tablename__ = "Events"
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    name = db.Column(db.Text, unique=True)
-    item_name = db.Column(db.Text, db.ForeignKey("Inventory.name", ondelete="SET NULL", onupdate="CASCADE"))
+    name = db.Column(db.Text)
+    coupon_code = db.Column(db.Text, unique=True)
     date_start = db.Column(db.Date, nullable=False)
     date_end = db.Column(db.Date, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
-    amount_type = db.Column(db.Text, nullable=False)
 
     def insert(self):
         db.session.add(self)
         db.session.commit()
-        
+        return self.id
 
     def delete(self):
         db.session.delete(self)
@@ -70,6 +69,25 @@ class Events(db.Model):
 
     def update(self):
         db.session.commit()
+
+@dataclass
+class EventData:
+    name: str
+    coupon: str
+    date_start: datetime
+    date_end: datetime
+    amount: int
+    id: int = None
+
+    def toDict(cls):
+        return {
+            "id": cls.id,
+            "name": cls.name,
+            "coupon_code": cls.coupon,
+            "date_start": datetime.strftime(cls.date_start,"%Y-%m-%d"),
+            "date_end": datetime.strftime(cls.date_end, "%Y-%m-%d"),
+            "amount": cls.amount
+        }
 
 @dataclass
 class Order: 
@@ -92,6 +110,7 @@ class Order:
             res["price"] = cls.price
             res["total_price"] = cls.total_price
         return res
+
 @dataclass
 class UserOrder:
     uid: int
@@ -136,11 +155,13 @@ class TodaySpecialData:
 class TodayEventData:
     event_id: int
     name: str
+    coupon_code: str
     disc_amount: int
 
     def toDict(cls):
         return {
-            "event_id": cls.event_ide,
+            "event_id": cls.event_id,
+            "coupon_code": cls.coupon_code,
             "title":  cls.name,
             "disc_amount": cls.disc_amount
         }

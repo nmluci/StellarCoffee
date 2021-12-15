@@ -1,4 +1,5 @@
 from __future__ import annotations
+from os import name
 from typing import List
 
 from datetime import datetime
@@ -6,7 +7,7 @@ from datetime import datetime
 from sqlalchemy.sql.operators import notbetween_op
 from app.inventory.models import Inventory
 
-from app.order.models import Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order
+from app.order.models import EventData, Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order
 from app.userdata.models import User
 from app.baseModel import db
 
@@ -22,13 +23,14 @@ def generateTodaySpecialty() -> List[TodaySpecialData]:
 
 def generateTodayEvents() -> List[TodayEventData]:
     todayDate = datetime.now().date()
-    todayEvent = db.session.query(Events).filter((Events.date_start >= todayDate) & (Events.date_end <= todayDate)).all()
+    todayEvent = db.session.query(Events).filter((Events.date_start <= todayDate) & (Events.date_end >= todayDate)).all()
     if not todayEvent:
         raise Exception("no events available today")
     return list(TodayEventData(
-        event.id, 
-        event.name, 
-        f"IDR {event.amount}" if event.amount_type == "cash" else f"{event.amount}%").toDict() for event in todayEvent)
+        event_id=event.id, 
+        name=event.name,
+        coupon_code=event.coupon_code,
+        disc_amount=f"IDR {event.amount}").toDict() for event in todayEvent)
 
 def isItemExists(metadata: Order):
     itemList = db.session.query(Inventory).all()
@@ -82,3 +84,20 @@ def processCheckout(metadata: UserOrder):
     usr.point += grandTotal/1000
     usr.update()
     metadata.done = True
+
+def insertEvents(metadata: EventData):
+    events = db.session.query(Events).filter(Events.coupon_code==metadata.coupon).all()
+    if events:
+        print(list(x.coupon_code for x in events))
+        raise Exception("event already listed")
+    
+    newEvent = Events(
+        name=metadata.name,
+        amount=metadata.amount,
+        coupon_code=metadata.coupon,
+        date_start=metadata.date_start,
+        date_end=metadata.date_end,
+    )
+    newEvent.insert()
+
+    metadata.id = newEvent.id
