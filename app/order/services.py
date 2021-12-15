@@ -31,6 +31,17 @@ def generateTodayEvents() -> List[TodayEventData]:
         coupon_code=event.coupon_code,
         disc_amount=f"IDR {event.amount}").toDict() for event in todayEvent)
 
+def generateAllValidEvents() -> List[TodayEventData]:
+    todayDate = datetime.now().date()
+    allEvent = db.session.query(Events).filter((Events.date_end >= todayDate)).all()
+    if not allEvent:
+        raise Exception("no events available yet")
+    return list(TodayEventData(
+        event_id=event.id, 
+        name=event.name,
+        coupon_code=event.coupon_code,
+        disc_amount=f"IDR {event.amount}").toDict() for event in allEvent)
+
 def isItemExists(metadata: Order):
     itemList = db.session.query(Inventory).all()
     for itm in itemList:
