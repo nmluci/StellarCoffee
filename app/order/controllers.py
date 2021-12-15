@@ -3,7 +3,7 @@ from flask.helpers import make_response
 from datetime import datetime
 from app.baseModel import SuccessResponse, FailedResponse
 from app.order.models import EventData, Order, UserOrder
-from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout, getUserGeneralHistoryCheckout, insertEvents, generateAllValidEvents
+from app.order.services import generateTodaySpecialty, generateTodayEvents, processCheckout, getUserGeneralHistoryCheckout, insertEvents, generateAllValidEvents, generateSomeValidEvents
 from app.userdata.models import User, UserData
 
 order_bp = Blueprint("order_bp", __name__)
@@ -53,8 +53,12 @@ def todayEvents():
 @order_bp.route("/api/order/events", methods=["GET"])
 def allEvents():
    try:
-      allEvents = generateAllValidEvents()
-      return make_response(SuccessResponse(data=allEvents).toDict())
+      count = request.args.get('count')
+      if not count:
+         events = generateAllValidEvents()
+      else:
+         events = generateSomeValidEvents(int(count))
+      return make_response(SuccessResponse(data=events).toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 

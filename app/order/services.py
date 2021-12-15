@@ -42,6 +42,17 @@ def generateAllValidEvents() -> List[TodayEventData]:
         coupon_code=event.coupon_code,
         disc_amount=f"IDR {event.amount}").toDict() for event in allEvent)
 
+def generateSomeValidEvents(count: int) -> List[TodayEventData]:
+    todayDate = datetime.now().date()
+    allEvent = db.session.query(Events).filter((Events.date_end >= todayDate)).all()
+    if not allEvent:
+        raise Exception("no events available yet")
+    return list(TodayEventData(
+        event_id=event.id, 
+        name=event.name,
+        coupon_code=event.coupon_code,
+        disc_amount=f"IDR {event.amount}").toDict() for event in allEvent[:count])
+
 def isItemExists(metadata: Order):
     itemList = db.session.query(Inventory).all()
     for itm in itemList:
@@ -76,6 +87,7 @@ def processCheckout(metadata: UserOrder):
         uid=metadata.uid,
         grand_price=metadata.total_price,
         quantity=metadata.total_quantity,
+        event_id=metadata.event_id,
         date_created=metadata.date_created
     )
     metadata.order_id = newOrder.insert()
