@@ -5,7 +5,7 @@ from flask.helpers import make_response
 
 from app.baseModel import FailedResponse, SuccessResponse
 from app.userdata.models import UserData
-from app.userdata.services import getLeaderboard, getUserData, userAddPoint
+from app.userdata.services import getLeaderboard, getUserData, userAddPoint, searchUserRank
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -36,5 +36,12 @@ def userLeaderboard():
    try:
       userCount = request.args.get("count")
       return make_response(SuccessResponse(data=getLeaderboard(userCount)).toDict())
+   except Exception as e:
+      return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
+
+@user_bp.route("/api/user/leaderboard/<username>", methods=["GET"])
+def geUserRank(username):
+   try:
+      return make_response(SuccessResponse(data=searchUserRank(username)).toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)

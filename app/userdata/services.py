@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 from typing import List
 
 from app.baseModel import db
@@ -53,7 +54,7 @@ def getUserData(metadata: UserData):
     metadata.lastname = usr.lastname
     metadata.point = usr.point
     metadata.password = usr.password
-    
+
 def getLeaderboard(usrCount: int):
     users = db.session.query(User).all()
     sortedUser = sortUserByPoint(list(UserData(
@@ -62,3 +63,21 @@ def getLeaderboard(usrCount: int):
         point=usr.point
     ) for usr in users))
     return sortedUser[:int(usrCount)]
+
+def getAllLeaderboard():
+    users = db.session.query(User).all()
+    sortedUser = sortUserByPoint(list(UserData(
+        username=usr.username,
+        uid=usr.uid,
+        point=usr.point
+    ) for usr in users))
+    return sortedUser
+
+def searchUserRank(username: str):
+    res = dict()
+
+    sortedUserByPoint = getAllLeaderboard()
+    for index, user in enumerate(sortedUserByPoint):
+        if user['username'] == username:
+            res['userRank'] = index + 1
+            return res

@@ -38,7 +38,7 @@ It's actually consist of 2 Core Part, [FrontEnd](https://github.com/kompiangg/St
 - Database Management
 - Hashing
 - Linear Searching
-- Bubble Sorting
+- Quick Sorting
 - Graph Coloring
 
 # Implemented Data Structure

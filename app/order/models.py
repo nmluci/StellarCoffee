@@ -165,3 +165,20 @@ class TodayEventData:
             "title":  cls.name,
             "disc_amount": cls.disc_amount
         }
+
+@dataclass
+class generalHistory:
+    order_id: int = 0
+    date_created: datetime = 0
+    grand_total: int = 0
+    total_item: int = 0
+    status: bool = False
+
+    def toDict(cls):
+        return {
+            "order_id": cls.order_id,
+            "date_created": cls.date_created,
+            "grand_total": cls.grand_total,
+            "total_item": cls.total_item,
+            "status": cls.status
+        }
