@@ -140,6 +140,29 @@ data = [
 ]
 points = [600, 500, 231, 421, 800, 142]
 
+events = [
+    {
+        "name": "Christmas Sale",
+        "code": "XMAS20SL",
+        "date_start": "2021-12-01",
+        "date_end": "2021-12-27",
+        "amount": 20000
+    },
+    {
+        "name": "New Year Sale", 
+        "code": "NY35SL",
+        "date_start": "2021-12-27",
+        "date_end": "2022-01-03",
+        "amount": 35000
+    },
+    {
+        "name": "StellarCoffee Anniversary Sale", 
+        "code": "STELLARCOFFEE60",
+        "date_start": "2021-12-17",
+        "date_end": "2021-12-19",
+        "amount": 60000
+    },
+]
 
 print("Inserting Userdata")
 for point, usr in zip(points, data):
@@ -161,5 +184,13 @@ for itm in inv:
     res = requests.post("http://127.0.0.1:5000/api/inventory", headers=baseHeader, json=itm)
     if res.status_code == 200:
         print(f"{itm['namaMenu']} added (id: {itm['menuId']})", res.status_code)
+    else:
+        print(res.json())
+
+print("Inserting Events Data")
+for itm in events:
+    res = requests.post("http://127.0.0.1:5000/api/order/events", headers=baseHeader, json=itm)
+    if res.status_code == 200:
+        print(f"{itm['name']} added (code: {itm['code']})", res.status_code)
     else:
         print(res.json())
