@@ -84,6 +84,7 @@ def checkout(uid):
          done=res["done"],
          total_price=res["grandTotal"],
          total_quantity=res["quantity"],
+         event_id=res["event_id"],
          date_created=datetime.fromtimestamp(float(res["created"]/1000)),
          orders=list(Order(
             uid=uid,
