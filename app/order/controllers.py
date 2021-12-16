@@ -37,7 +37,7 @@ order_bp = Blueprint("order_bp", __name__)
 def todaySpecialty():
    try:
       todaySpecials = generateTodaySpecialty()
-      return make_response(SuccessResponse(data=todaySpecials).toDict())
+      return make_response(SuccessResponse(data=[todaySpecials]).toDict())
    except Exception as e:
       return make_response(FailedResponse(errorMessage=str(e)).toDict(), 500)
 
