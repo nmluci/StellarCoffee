@@ -16,87 +16,87 @@ inv = [
     },
     {
         "menuId": 2,
-        "namaMenu": "Americano",
-        "hargaMenu": 24000,
-        "pathGambar": "/assets/img/menu/americano.jpg"
-    },
-    {
-        "menuId": 3,
         "namaMenu": "Cappucino",
         "hargaMenu": 25000,
         "pathGambar": "/assets/img/menu/cappucino.jpg"
     },
     {
-        "menuId": 4,
-        "namaMenu": "Vanilla Latte",
-        "hargaMenu": 27000,
-        "pathGambar": "/assets/img/menu/vanilla-latte.jpg"
-    },
-    {
-        "menuId": 5,
+        "menuId": 3,
         "namaMenu": "Cafe Latte",
         "hargaMenu": 25000,
         "pathGambar": "/assets/img/menu/cafe-latte.jpg"
     },
     {
+        "menuId": 4,
+        "namaMenu": "Americano",
+        "hargaMenu": 24000,
+        "pathGambar": "/assets/img/menu/americano.jpg"
+    },
+    {
+        "menuId": 5,
+        "namaMenu": "Vanilla Latte",
+        "hargaMenu": 27000,
+        "pathGambar": "/assets/img/menu/vanilla-latte.jpg"
+    },
+    {
         "menuId": 6,
-        "namaMenu": "Lemon Tea",
-        "hargaMenu": 17000,
-        "pathGambar": "/assets/img/menu/lemon-tea.jpg"
-    },
-    {
-        "menuId": 7,
-        "namaMenu": "Lychee Tea",
-        "hargaMenu": 20000,
-        "pathGambar": "/assets/img/menu/lychee-tea.jpg"
-    },
-    {
-        "menuId": 8,
-        "namaMenu": "Taro Latte",
-        "hargaMenu": 20000,
-        "pathGambar": "/assets/img/menu/taro-latte.jpg"
-    },
-    {
-        "menuId": 9,
-        "namaMenu": "Matcha Latte",
-        "hargaMenu": 25000,
-        "pathGambar": "/assets/img/menu/matcha-latte.jpg"
-    },
-    {
-        "menuId": 10,
-        "namaMenu": "Chocolate Latte",
-        "hargaMenu": 25000,
-        "pathGambar": "/assets/img/menu/chocolate-latte.jpg"
-    },
-    {
-        "menuId": 11,
         "namaMenu": "French Fries",
         "hargaMenu": 17000,
         "pathGambar": "/assets/img/menu/french-fries.jpg"
     },
     {
-        "menuId": 12,
-        "namaMenu": "Potato Wedges",
-        "hargaMenu": 20000,
-        "pathGambar": "/assets/img/menu/potato-wedges.jpg"
-    },
-    {
-        "menuId": 13,
+        "menuId": 7,
         "namaMenu": "Croissant",
         "hargaMenu": 25000,
         "pathGambar": "/assets/img/menu/croissant.jpg"
     },
     {
-        "menuId": 14,
+        "menuId": 8,
+        "namaMenu": "Deluxe Burger",
+        "hargaMenu": 50000,
+        "pathGambar": "/assets/img/menu/deluxe-burger.jpg"
+    },
+    {
+        "menuId": 9,
+        "namaMenu": "Potato Wedges",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/potato-wedges.jpg"
+    },
+    {
+        "menuId": 10,
         "namaMenu": "Cheese Burger",
         "hargaMenu": 45000,
         "pathGambar": "/assets/img/menu/cheese-burger.jpg"
     },
     {
+        "menuId": 11,
+        "namaMenu": "Lemon Tea",
+        "hargaMenu": 17000,
+        "pathGambar": "/assets/img/menu/lemon-tea.jpg"
+    },
+    {
+        "menuId": 12,
+        "namaMenu": "Taro Latte",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/taro-latte.jpg"
+    },
+    {
+        "menuId": 13,
+        "namaMenu": "Chocolate Latte",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/chocolate-latte.jpg"
+    },
+    {
+        "menuId": 14,
+        "namaMenu": "Lychee Tea",
+        "hargaMenu": 20000,
+        "pathGambar": "/assets/img/menu/lychee-tea.jpg"
+    },
+    {
         "menuId": 15,
-        "namaMenu": "Deluxe Burger",
-        "hargaMenu": 50000,
-        "pathGambar": "/assets/img/menu/deluxe-burger.jpg"
+        "namaMenu": "Matcha Latte",
+        "hargaMenu": 25000,
+        "pathGambar": "/assets/img/menu/matcha-latte.jpg"
     }
 ]
 
