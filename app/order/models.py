@@ -1,5 +1,9 @@
+from typing import Dict, List, Mapping
+
 from dataclasses import dataclass
 from datetime import datetime
+
+from sqlalchemy.util.langhelpers import monkeypatch_proxied_specials
 from app.baseModel import db
 
 class Orders(db.Model):
@@ -69,6 +73,44 @@ class Events(db.Model):
 
     def update(self):
         db.session.commit()
+        
+class Graph:
+	def __init__(self, vertices: List[List[int]], alias: List):
+		self.alias = alias
+		self.days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+		self.V = vertices
+		self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+
+	def isSafe(self, v, colour, c):
+		for i in range(self.V):
+			if self.graph[v][i] == 1 and colour[i] == c:
+				return False
+		return True
+	
+	def graphColourUtil(self, m, colour, v):
+		if v == self.V:
+			return True
+
+		for c in range(1, m + 1):
+			if self.isSafe(v, colour, c) == True:
+				colour[v] = c
+				if self.graphColourUtil(m, colour, v + 1) == True:
+					return True
+				colour[v] = 0
+
+	def graphColouring(self, m: int) -> Dict:
+		mappedColour = dict(list())
+		colour = [0] * self.V
+		if self.graphColourUtil(m, colour, 0) == None:
+			return False
+		
+		for idx, c in enumerate(colour):
+			if not mappedColour.get(c):
+				mappedColour[c] = [self.alias[idx]]
+			else:
+				mappedColour[c].append(self.alias[idx])
+
+		return mappedColour
 
 @dataclass
 class EventData:
@@ -139,16 +181,14 @@ class TodaySpecialData:
     item_id: int
     name: str
     price: int
-    total_price: int
-    quantity: int
+    path: str
 
     def toDict(cls):
         return {
             "id": cls.item_id,
             "name": cls.name,
             "price": cls.price,
-            "total_price": cls.total_price,
-            "quantity": cls.quantity
+            "pics": cls.path
         }
 
 @dataclass

@@ -1,5 +1,5 @@
 <h1 align="center">Stellar Coffee</h1>
-<img src="./docs/StellarCoffee.png"> 
+<img src="./docs/StellarCoffee2.png"> 
 <h2 align="center">Our Data Structure Course's Final Project</h2>
 </br>
 
@@ -55,4 +55,6 @@ It's actually consist of 2 Core Part, [FrontEnd](https://github.com/kompiangg/St
 | SQLAlchemy       | Provides Database Interface Abstraction for Python   |
 
 # Full Team
-[Fuyuna](https://github.com/nmluci) [Pangpang](https://github.com/kompiangg)
+| [Fuyuna](https://github.com/nmluci) | [Pangpang](https://github.com/kompiangg) | [Ngakan](https://github.com/NgakanWidyasprana) | [Diah](https://github.com/diahpramesti) | [James Fang](https://github.com/jamesfangyauw) | [Audy](https://github.com/diahpramesti) | 
+--------------------------------------|------------------------------------------|------------------------------------------------|-----------------------------------------|------------------------------------------------|------------------------------------------
+| Project Lead, Back-End, DBA         | Full-Stack DevOps                        | Full-Stack                                     | Front-End                               | Front-End                                      | Front-End        

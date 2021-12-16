@@ -3,22 +3,54 @@ from typing import List
 
 from datetime import datetime
 
-from sqlalchemy.sql.operators import notbetween_op
 from app.inventory.models import Inventory
 
-from app.order.models import Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order, generalHistory, EventData
+from app.order.models import Events, OrderItems, Orders, TodayEventData, TodaySpecialData, UserOrder, Order, generalHistory, EventData, Graph
 from app.userdata.models import User
 from app.baseModel import db
 
 def generateTodaySpecialty() -> List[TodaySpecialData]:
-    todaySpecials = db.session.query(Inventory).filter(Inventory.stock != 0).all()
-    if not todaySpecials:
-        raise Exception("no specials menu today")
-    return list(TodaySpecialData(
-        item.id,
-        item.name,
-        item.price
-    ).toDict() for item in todaySpecials[:5])
+    aliases = ["Espresso", "Cappucino", 
+		   "Cafe Latte", "Americano", 
+		   "Vanilla Latte", "French Fries", 
+		   "Croissant", "Deluxe Burger",
+		   "Potato Wedges", "Cheese Burger",
+		   "Lemon Tea", "Taro Latte", "Chocolate Latte", "Lychee Tea", "Matcha Latte"]
+
+    g = Graph(15, aliases)
+    g.graph =	[
+		[ 0 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ],
+		[ 0 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,1 ,0 ,1 ,0 ,0 ,1 ,0 ],
+		[ 1 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,1 ,0 ,1 ,1 ,1 ],
+		[ 1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,0 ,0 ,1 ,0 ,0 ],
+		[ 1 ,1 ,0 ,1 ,0 ,0 ,0 ,1 ,1 ,0 ,1 ,1 ,1 ,0 ,0 ], 
+		[ 1 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,0 ,0 ,1 ,1 ,0 ,0 ,1 ],
+		[ 0 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ],
+		[ 1 ,0 ,1 ,0 ,1 ,1 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ],
+		[ 1 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,1 ,1 ],
+		[ 1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,1 ,1 ,1 ],
+		[ 1 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,1 ,1 ,0 ,1 ,0 ,0 ,0 ],
+		[ 1 ,1 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ],
+		[ 1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ],
+		[ 0 ,0 ,1 ,0 ,0 ,1 ,1 ,0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ],
+		[ 1 ,0 ,1 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,0 ,0 ,0 ],
+    ]
+
+    allSpeciality = g.graphColouring(5)
+    for key in allSpeciality.keys():
+        detailed = list()
+        for itm in allSpeciality[key]:
+            print(itm)
+            specialItem = db.session.query(Inventory).filter(Inventory.name==itm).first()
+            detailed.append(TodaySpecialData(
+                item_id=specialItem.id,
+                name=specialItem.name,
+                price=specialItem.price,
+                path=specialItem.path_picture
+            ))
+        allSpeciality[key] = detailed
+
+    return allSpeciality
 
 def generateTodayEvents() -> List[TodayEventData]:
     todayDate = datetime.now().date()
