@@ -19,7 +19,7 @@ def verifyUserCredentials(metadata: SignInModel) -> bool:
     if not usr: 
         return False
     else: 
-        return (usr.username != metadata.username) or (usr.password != uniquify(metadata.password, 20))
+        return (usr.username == metadata.username) and (int(usr.password) == uniquify(metadata.password, 10))
 
 def registerUser(metadata: SignUpModel):
     plaintext = f"{metadata.username}:{metadata.password}"
