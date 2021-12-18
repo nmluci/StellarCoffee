@@ -31,7 +31,7 @@ It's actually consist of 2 Core Part, [FrontEnd](https://github.com/kompiangg/St
 | Special Menu Page     | User Leaderboard Ranking System  |
 | User Login Page       | Rest API + Auth + CORS           |
 
-[Click Here For More In-depth Stuff Documentation](./docs/modulesBreakdown.md)
+[Click Here For More In-depth Stuff Documentation (and cooler style)](./docs/modulesBreakdown.md)
 
 # Implemented Concepts
 - Modularity (Obviously)
@@ -47,12 +47,46 @@ It's actually consist of 2 Core Part, [FrontEnd](https://github.com/kompiangg/St
 - Graph
 
 # Technical Stuff
+## Installation Usage
+### First Time Install
+Make a new virtual environment (in case soemthing wrong, then its probably not my fault)
+```
+python -m virtualenv ./venv
+```
+Install all dependencies needed
+```
+pip install -r ./requirement.txt
+```
+
+Run for the first time
+```
+python ./run.py --debug
+```
+
+### Run (after being initialized)
+```
+python ./run.py
+```
+
+## Environment Variables
+| variables | values                         |
+------------|---------------------------------
+| API_KEY   | Access API KEY                 | 
+| DEV_KEY   | Internal Access KEY            | 
+| DB_AUTH   | Database path + protocol used* |
+
+#### * string should be formatted as what stated in sqlalchemy docs
+#### ** all key are sold separately for ~~owner profit~~ security concern
+## Depedencies
 | Libraries        | Function                                             | 
 -------------------|-------------------------------------------------------
 | Flask            | Provides Backend Microinfrastructure                 |
 | Flask-cors       | Provides CORS for Flask Framework                    |
 | Flask-SQLAlchemy | Provides SQLAlchemy Integrations for Flask Framework |
 | SQLAlchemy       | Provides Database Interface Abstraction for Python   |
+
+## Why Python?
+bruh. Python is really really really **easy** to adapted to
 
 # Full Team
 | [Fuyuna](https://github.com/nmluci) | [Pangpang](https://github.com/kompiangg) | [Ngakan](https://github.com/NgakanWidyasprana) | [Diah](https://github.com/diahpramesti) | [James Fang](https://github.com/jamesfangyauw) | [Audy](https://github.com/diahpramesti) | 
